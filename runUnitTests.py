@@ -14,23 +14,24 @@
 import unittest
 import sys
 
-if len(sys.argv) > 1:
-    if sys.argv[1].isdigit():
-        vlevel = int(sys.argv[1])
-        print("Verbosity set to {0}.".format(vlevel))
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        if sys.argv[1].isdigit():
+            vlevel = int(sys.argv[1])
+            print("Verbosity set to {0}.".format(vlevel))
+        else:
+            print("Argument not recognized. You need to specify a "
+                    "positive integer.")
+            exit(1)
     else:
-        print("Argument not recognized. You need to specify a "
-                "positive integer.")
-        exit(1)
-else:
-    print("No verbosity specified. Assuming default (2).")
-    vlevel = 2
+        print("No verbosity specified. Assuming default (2).")
+        vlevel = 2
 
 
-loader = unittest.TestLoader()
+    loader = unittest.TestLoader()
 
-suite = loader.discover(".")
+    suite = loader.discover(".", "*.py")
 
-ttr = unittest.TextTestRunner(verbosity=2)
+    ttr = unittest.TextTestRunner(verbosity=vlevel)
 
-ttr.run(suite)
+    ttr.run(suite)
